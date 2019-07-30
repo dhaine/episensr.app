@@ -9,49 +9,25 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-The goal of episensr.app is to …
+**episensr.app** provides an interactive web app for the R package
+[**episensr**](https://cran.r-project.org/package=episensr). The R
+package **episensr** allows to do basic sensitivity analysis of
+epidemiological results as described in **Applying Quantitative Bias
+Analysis to Epidemiological Data** by Timothy L. Lash, Matthew P. Fox,
+and Aliza K. Fink (ISBN: 978-0-387-87960-4,
+[bias.analysis](https://sites.google.com/site/biasanalysis/)). A similar
+function is available in Stata
+([episens](http://ideas.repec.org/c/boc/bocode/s456792.html)).
 
 ## Installation
 
-You can install the released version of episensr.app from
-[CRAN](https://CRAN.R-project.org) with:
+You can install the development version from
+[GitHub](https://github.com/dhaine/episensr.app) with:
 
 ``` r{eval=false}
-install.packages("episensr.app")
+#install.packages("remotes")
+remotes::install_github("dhaine/episensr.app")
 ```
-
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-library(episensr.app)
-## basic example code
-```
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub\!
 
 Please note that the ‘episensr.app’ project is released with a
 [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to

@@ -10,12 +10,12 @@
 
 golem::fill_desc(
   pkg_name = "episensr.app", # The Name of the package containing the App 
-  pkg_title = "PKG_TITLE", # The Title of the package containing the App 
-  pkg_description = "PKG_DESC.", # The Description of the package containing the App 
-  author_first_name = "AUTHOR_FIRST", # Your First Name
-  author_last_name = "AUTHOR_LAST",  # Your Last Name
-  author_email = "AUTHOR@MAIL.COM",      # Your Email
-  repo_url = NULL # The (optional) URL of the GitHub Repo
+  pkg_title = "Shiny app for episensr, basic sensitivity analysis for epidemiological results", # The Title of the package containing the App 
+  pkg_description = "Application for using episensr. See https://cran.r-project.org/web/packages/episensr/index.html.", # The Description of the package containing the App 
+  author_first_name = "Denis", # Your First Name
+  author_last_name = "Haine",  # Your Last Name
+  author_email = "denis.haine@gmail.com",      # Your Email
+  repo_url = "https://github.com/dhaine/episensr.app" # The (optional) URL of the GitHub Repo
 )     
 
 ## Use this desc to set {golem} options
@@ -26,7 +26,7 @@ golem::set_golem_options()
 ## 
 ## If you want to use the MIT licence, README, code of conduct, lifecycle badge, and news
 
-usethis::use_mit_license( name = "Golem User" )  # You can set another licence here
+usethis::use_mit_license( name = "Denis Haine" )  # You can set another licence here
 usethis::use_readme_rmd( open = FALSE )
 usethis::use_code_of_conduct()
 usethis::use_lifecycle_badge( "Experimental" )

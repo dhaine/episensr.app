@@ -1,12 +1,14 @@
 Package: episensr.app
-Title: An Amazing Shiny App
+Title: Shiny app for episensr, basic sensitivity analysis for epidemiological results
 Version: 0.0.0.9000
-Authors@R: person("firstname", "lastname", email = "your@email.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: What license is it under?
+Authors@R: person('Denis', 'Haine', email = 'denis.haine@gmail.com', role = c('cre', 'aut'))
+Description: Application for using episensr. See https://cran.r-project.org/web/packages/episensr/index.html.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 
     shiny, 
     golem
 RoxygenNote: 6.1.0
+URL: https://github.com/dhaine/episensr.app
+BugReports: https://github.com/dhaine/episensr.app/issues

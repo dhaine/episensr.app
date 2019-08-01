@@ -10,16 +10,25 @@ app_ui <- function() {
     navbarPage(
         theme = shinytheme("united"),
         "episensr: Basic Sensitivity Analysis of Epidemiological Results",
-        tabPanel("About",
-                 column(1),
-                 column(5, rep_br(3),
-                        p("Quantitative bias analysis allows to estimate nonrandom errors in epidemiologic studies, assessing the magnitude and direction of biases, and quantifying their uncertainties. Every study has some random error due to its limited sample size, and is susceptible to systematic errors as well, from selection bias to the presence of (un)known confounders or information bias (measurement error, including misclassification). Bias analysis methods were compiled by Lash et al. in their book", enurl("https://www.springer.com/us/book/9780387879604", "Applying Quantitative Bias Analysis to Epidemiologic Data."), "This Shiny app implements two bias analyses, selection and misclassification biases. More can be found in the", code("episensr"), "package available for download on", enurl("https://CRAN.R-project.org/package=episensr", "R CRAN"), "."), rep_br(3), includeMarkdown("inst/app/www/functions.md")),
-                 column(5, rep_br(3),
-                        wellPanel("Please report bugs at", enurl("https://github.com/dhaine/episensr.app/issues", "https://github.com/dhaine/episensr.app/issues"), rep_br(2), "Shiny app by", enurl("https://www.denishaine.ca", "Denis Haine"), rep_br(2), "episensr version:", verbatimTextOutput("versioning", placeholder = TRUE))),
-                 column(1)
-                 ),
-        tabPanel("tab2")
-        )
+        tabPanel("Main",
+                 icon = icon("home", lib = "glyphicon")),
+        tabPanel("Data",
+                 icon = icon("table", lib = "font-awesome")),
+        tabPanel("Parameters",
+                 icon = icon("cog", lib = "glyphicon")),
+        navbarMenu("About episensr",
+                   icon = icon("bullseye", lib = "font-awesome"),
+                   tabPanel("About",
+                            icon = icon("address-card-o", lib = "font-awesome"),
+                            column(1),
+                            column(5, rep_br(3),
+                                   p("Quantitative bias analysis allows to estimate nonrandom errors in epidemiologic studies, assessing the magnitude and direction of biases, and quantifying their uncertainties. Every study has some random error due to its limited sample size, and is susceptible to systematic errors as well, from selection bias to the presence of (un)known confounders or information bias (measurement error, including misclassification). Bias analysis methods were compiled by Lash et al. in their book", enurl("https://www.springer.com/us/book/9780387879604", "Applying Quantitative Bias Analysis to Epidemiologic Data."), "This Shiny app implements two bias analyses, selection and misclassification biases. More can be found in the", code("episensr"), "package available for download on", enurl("https://CRAN.R-project.org/package=episensr", "R CRAN"), "."), rep_br(3), includeMarkdown("inst/app/www/functions.md")),
+                            column(5, rep_br(3),
+                                   wellPanel("Please report bugs at", enurl("https://github.com/dhaine/episensr.app/issues", "https://github.com/dhaine/episensr.app/issues"), rep_br(2), "Shiny app by", enurl("https://www.denishaine.ca", "Denis Haine"), rep_br(2), "episensr version:", verbatimTextOutput("versioning", placeholder = TRUE))),
+                            column(1)
+                            )
+                   )
+    )
   )
 }
 

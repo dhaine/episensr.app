@@ -31,7 +31,63 @@ app_ui <- function() {
                  ),
         tabPanel("Analysis",
                  icon = icon("cog", lib = "glyphicon"),
-                 sidebarPanel(DT::DTOutput('two_by_two'))
+                 sidebarPanel(h4("Observed data:"),
+                              DT::DTOutput('two_by_two'),
+                              br(),
+                              ## Selection probability among cases exposed
+                              sliderInput("bias_parms1",
+                                          "Selection probability among cases exposed:",
+                                          value = 0.94,
+                                          min = 0,
+                                          max = 1,
+                                          width = "600px"),
+                              ## Selection probability among cases unexposed
+                              sliderInput("bias_parms2",
+                                          "Selection probability among cases unexposed:",
+                                          value = 0.85,
+                                          min = 0,
+                                          max = 1,
+                                          width = "600px"),
+                              ## Selection probability among noncases exposed
+                              sliderInput("bias_parms3",
+                                          "Selection probability among noncases exposed:",
+                                          value = 0.64,
+                                          min = 0,
+                                          max = 1,
+                                          width = "600px"),
+                              ## Selection probability among noncases unexposed
+                              sliderInput("bias_parms4",
+                                          "Selection probability among noncases unexposed:",
+                                          value = 0.25,
+                                          min = 0,
+                                          max = 1,
+                                          width = "600px"),
+                              ## Alpha level
+                              sliderInput("alpha",
+                                          HTML("&alpha;-level:"),
+                                          value = 0.95,
+                                          min = 0.8,
+                                          max = 0.99,
+                                          width = "600px")
+                              ),
+                 mainPanel(
+                     fluidRow(
+                         column(width = 4,
+                                br(),
+                                h4("Corrected data"),
+                                tableOutput(outputId = "corr_data")
+                                ),
+                         column(width = 8,
+                                h4("Observed measures of association:"),
+                                tableOutput(outputId = "obs_measures"),
+                                h4("Corrected measures of association:"),
+                                br(),
+                                tableOutput(outputId = "adj_measures"),
+                                h5("Selection bias odds ratio based on the bias parameters chosen:"),
+                                tableOutput(outputId = "selbias_or")
+                                )
+                     )
+                 )
                  ),
         navbarMenu("About episensr",
                    icon = icon("bullseye", lib = "font-awesome"),

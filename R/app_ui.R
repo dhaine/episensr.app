@@ -1,7 +1,15 @@
 #' @import shiny
 #' @import shinythemes
 #' @import rmarkdown
+#' @import DT
 #' @import episensr
+dat <- data.frame(
+    V1 = c(as.character(numericInput("x11", "", 0)),
+           as.character(numericInput("x21", "", 0))),
+    V2 = c(as.character(numericInput("x21", "", 0)),
+           as.character(numericInput("x22", "", 0)))
+)
+
 app_ui <- function() {
   tagList(
     # Leave this function for adding external resources
@@ -22,7 +30,9 @@ app_ui <- function() {
                  mainPanel(column(10, uiOutput("bias_choice")))
                  ),
         tabPanel("Analysis",
-                 icon = icon("cog", lib = "glyphicon")),
+                 icon = icon("cog", lib = "glyphicon"),
+                 sidebarPanel(DT::DTOutput('two_by_two'))
+                 ),
         navbarMenu("About episensr",
                    icon = icon("bullseye", lib = "font-awesome"),
                    tabPanel("About",

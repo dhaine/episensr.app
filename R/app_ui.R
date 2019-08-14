@@ -11,10 +11,17 @@ app_ui <- function() {
         theme = shinytheme("united"),
         "episensr: Basic Sensitivity Analysis of Epidemiological Results",
         tabPanel("Main",
-                 icon = icon("home", lib = "glyphicon")),
-        tabPanel("Data",
-                 icon = icon("table", lib = "font-awesome")),
-        tabPanel("Parameters",
+                 icon = icon("home", lib = "glyphicon"),
+                 sidebarPanel(
+                     radioButtons("type", strong("Type of bias analysis:"),
+                                  list("Selection bias" = "selection",
+                                       "Misclassification bias" = "misclass",
+                                       "Probabilistic sensitivity analysis" = "probsens")
+                                  )
+                 ),
+                 mainPanel(column(10, uiOutput("bias_choice")))
+                 ),
+        tabPanel("Analysis",
                  icon = icon("cog", lib = "glyphicon")),
         navbarMenu("About episensr",
                    icon = icon("bullseye", lib = "font-awesome"),

@@ -1,14 +1,9 @@
 #' @import shiny
 #' @import shinythemes
 #' @import rmarkdown
-#' @import DT
+#' @import rhandsontable
 #' @import episensr
-dat <- data.frame(
-    V1 = c(as.character(numericInput("x11", "", 0)),
-           as.character(numericInput("x21", "", 0))),
-    V2 = c(as.character(numericInput("x21", "", 0)),
-           as.character(numericInput("x22", "", 0)))
-)
+DF = data.frame(Exposed = c(0, 0), Unexposed = c(0, 0), row.names = c("Cases", "Noncases"))
 
 app_ui <- function() {
   tagList(
@@ -32,7 +27,7 @@ app_ui <- function() {
         tabPanel("Analysis",
                  icon = icon("cog", lib = "glyphicon"),
                  sidebarPanel(h4("Observed data:"),
-                              DT::DTOutput('two_by_two'),
+                              rHandsontableOutput('two_by_two'),
                               br(),
                               ## Selection probability among cases exposed
                               sliderInput("bias_parms1",
@@ -65,19 +60,20 @@ app_ui <- function() {
                               ## Alpha level
                               sliderInput("alpha",
                                           HTML("&alpha;-level:"),
-                                          value = 0.95,
-                                          min = 0.8,
-                                          max = 0.99,
+                                          value = 0.05,
+                                          min = 0.01,
+                                          max = 0.2,
                                           width = "600px")
                               ),
                  mainPanel(
                      fluidRow(
                          column(width = 4,
                                 br(),
-                                h4("Corrected data"),
+                                h4("Corrected data:"),
                                 tableOutput(outputId = "corr_data")
                                 ),
                          column(width = 8,
+                                br(),
                                 h4("Observed measures of association:"),
                                 tableOutput(outputId = "obs_measures"),
                                 h4("Corrected measures of association:"),

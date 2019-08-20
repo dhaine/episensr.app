@@ -30,10 +30,13 @@ app_ui <- function() {
                  sidebarPanel(h4("Observed data:"),
                               rHandsontableOutput('two_by_two'),
                               br(),
-                              checkboxInput(
+                              prettyCheckbox(
                                   inputId = "parms_controller",
                                   label = "Providing Selection-bias factor instead of Selection probabilities",
-                                  value = FALSE
+                                  value = FALSE,
+                                  status = "primary",
+                                  icon = icon("check"),
+                                  animation = "smooth"
                               ),
                               conditionalPanel(
                                   condition = "input.parms_controller == 0",
@@ -69,12 +72,12 @@ app_ui <- function() {
                               conditionalPanel(
                                   condition = "input.parms_controller == 1",
                                   ## Selection-bias factor
-                                  numericInput("bias_factor",
+                                  sliderInput("bias_factor",
                                                "Selection-bias factor:",
-                                               value = 0.5,
+                                               value = 0.43,
                                                min = 0,
-                                               max = 1
-                                               )                        
+                                              max = 1,
+                                              width = "600px")                       
                               ),
                               ## Alpha level
                               sliderInput("alpha",

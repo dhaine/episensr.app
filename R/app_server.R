@@ -12,22 +12,6 @@ app_server <- function(input, output,session) {
                                        includeMarkdown(bias_file)
                                    })
 
-#    observeEvent(input$parms_controller, {
-#                     if(input$parms_controller == FALSE) {
-#                         shinyjs::show(id = "bias_parms1")
-#                         shinyjs::show(id = "bias_parms2")
-#                         shinyjs::show(id = "bias_parms3")
-#                         shinyjs::show(id = "bias_parms4")
-#                         shinyjs::hide(id = "bias_factor")
-#                     } else {
-#                         shinyjs::hide(id = "bias_parms1")
-#                         shinyjs::hide(id = "bias_parms2")
-#                         shinyjs::hide(id = "bias_parms3")
-#                         shinyjs::hide(id = "bias_parms4")
-#                         shinyjs::show(id = "bias_factor")
-#                     }
-#                 })
-    
     # Initiate table
     previous <- reactive({DF})
 
@@ -48,10 +32,14 @@ app_server <- function(input, output,session) {
     episensrout = reactive({
                                mat <- as.matrix(MyChanges())
                                mod <- selection(mat,
-                                                bias_parms = c(input$bias_parms1,
-                                                               input$bias_parms2,
-                                                               input$bias_parms3,
-                                                               input$bias_parms4),
+                                                bias_parms = if (input$parms_controller == FALSE) {
+                                       c(input$bias_parms1,
+                                         input$bias_parms2,
+                                         input$bias_parms3,
+                                         input$bias_parms4)
+                                   } else if (input$parms_controller == TRUE) {
+                                       input$bias_factor
+                                   },
                                                 alpha = input$alpha)
                            })
 

@@ -2,6 +2,7 @@
 #' @import shinythemes
 #' @import rmarkdown
 #' @import rhandsontable
+#' @import shinyWidgets
 #' @import episensr
 DF = data.frame(Exposed = c(0, 0), Unexposed = c(0, 0), row.names = c("Cases", "Noncases"))
 
@@ -29,34 +30,52 @@ app_ui <- function() {
                  sidebarPanel(h4("Observed data:"),
                               rHandsontableOutput('two_by_two'),
                               br(),
-                              ## Selection probability among cases exposed
-                              sliderInput("bias_parms1",
-                                          "Selection probability among cases exposed:",
-                                          value = 0.94,
-                                          min = 0,
-                                          max = 1,
-                                          width = "600px"),
-                              ## Selection probability among cases unexposed
-                              sliderInput("bias_parms2",
-                                          "Selection probability among cases unexposed:",
-                                          value = 0.85,
-                                          min = 0,
-                                          max = 1,
-                                          width = "600px"),
-                              ## Selection probability among noncases exposed
-                              sliderInput("bias_parms3",
-                                          "Selection probability among noncases exposed:",
-                                          value = 0.64,
-                                          min = 0,
-                                          max = 1,
-                                          width = "600px"),
-                              ## Selection probability among noncases unexposed
-                              sliderInput("bias_parms4",
-                                          "Selection probability among noncases unexposed:",
-                                          value = 0.25,
-                                          min = 0,
-                                          max = 1,
-                                          width = "600px"),
+                              checkboxInput(
+                                  inputId = "parms_controller",
+                                  label = "Providing Selection-bias factor instead of Selection probabilities",
+                                  value = FALSE
+                              ),
+                              conditionalPanel(
+                                  condition = "input.parms_controller == 0",
+                                  ## Selection probability among cases exposed
+                                  sliderInput("bias_parms1",
+                                              "Selection probability among cases exposed:",
+                                              value = 0.94,
+                                              min = 0,
+                                              max = 1,
+                                              width = "600px"),
+                                  ## Selection probability among cases unexposed
+                                  sliderInput("bias_parms2",
+                                              "Selection probability among cases unexposed:",
+                                              value = 0.85,
+                                              min = 0,
+                                              max = 1,
+                                              width = "600px"),
+                                  ## Selection probability among noncases exposed
+                                  sliderInput("bias_parms3",
+                                              "Selection probability among noncases exposed:",
+                                              value = 0.64,
+                                              min = 0,
+                                              max = 1,
+                                              width = "600px"),
+                                  ## Selection probability among noncases unexposed
+                                  sliderInput("bias_parms4",
+                                              "Selection probability among noncases unexposed:",
+                                              value = 0.25,
+                                              min = 0,
+                                              max = 1,
+                                              width = "600px")
+                              ),
+                              conditionalPanel(
+                                  condition = "input.parms_controller == 1",
+                                  ## Selection-bias factor
+                                  numericInput("bias_factor",
+                                               "Selection-bias factor:",
+                                               value = 0.5,
+                                               min = 0,
+                                               max = 1
+                                               )                        
+                              ),
                               ## Alpha level
                               sliderInput("alpha",
                                           HTML("&alpha;-level:"),

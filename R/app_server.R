@@ -12,6 +12,22 @@ app_server <- function(input, output,session) {
                                        includeMarkdown(bias_file)
                                    })
 
+#    observeEvent(input$parms_controller, {
+#                     if(input$parms_controller == FALSE) {
+#                         shinyjs::show(id = "bias_parms1")
+#                         shinyjs::show(id = "bias_parms2")
+#                         shinyjs::show(id = "bias_parms3")
+#                         shinyjs::show(id = "bias_parms4")
+#                         shinyjs::hide(id = "bias_factor")
+#                     } else {
+#                         shinyjs::hide(id = "bias_parms1")
+#                         shinyjs::hide(id = "bias_parms2")
+#                         shinyjs::hide(id = "bias_parms3")
+#                         shinyjs::hide(id = "bias_parms4")
+#                         shinyjs::show(id = "bias_factor")
+#                     }
+#                 })
+    
     # Initiate table
     previous <- reactive({DF})
 

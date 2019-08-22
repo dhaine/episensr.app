@@ -1,25 +1,43 @@
-Estimate of association can be biased if subjects are incorrectly categorized
-with respect to their exposure status or outcome.
-These errors are often referred to as misclassification, and the mechanism that
-produces these errors can result in either non-differential or differential
+---
+output: 
+  html_document:
+    mathjax:"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+runtime: shiny
+---
+It performs a simple sensitivity analysis for disease or exposure
 misclassification.
+Confidence interval for odds ratio is computed as in Chu et al. (2006), for
+exposure misclassification.
 
-For exposure misclassification, the misclassification is nondifferential if it
-is unrelated to the occurrence or presence of disease; if the misclassification
-of exposure is different for those with and without disease, it is differential.
-Similarly, misclassification of disease [outcome] is nondifferential if it is
-unrelated to the exposure; otherwise, it is differential.
+Estimate of association can be biased if subjects are incorrectly categorized
+with respect to their exposure status or outcome, i.e. exposed/diseased subjects
+can be classified as non-exposed/non-diseased and vice versa.
+Most studies have some degree of misclassification, as there's no perfect
+instruments to obtain data (sensitivity and/or specificity are not perfect).
+Random error can also cause misclassification (e.g. data entry, missing data).
 
-#### Nondifferential Misclassification of Exposure
+There are two type of misclassification bias, differential (misclassification is
+different in the groups to be compared) and nondifferential (misclassification
+is the same across groups to be compared).
 
-Nondifferential misclassification means that the frequency of errors is
-approximately the same in the groups being compared.
-Misclassification of exposure status is more of a problem than misclassification
-of outcome, but a study may be biased by misclassification of either exposure
-status, or outcome status, or both.
+In the **Analysis tab**, provide:
 
-Nondifferential misclassification of a dichotomous exposure occurs when errors
-in classification occur to the same degree regardless of outcome.
-Nondifferential misclassification of exposure is a much more pervasive problem
-than differential misclassification (in which errors occur with greater
-frequency in one of the study groups).
+1. The 2-by-2 table of exposure and outcome,
+2. The type of misclassification: exposure misclassification (corrections using
+   sensitivity and specificity: nondifferential and independent errors) or
+   outcome misclassification,
+3. The following bias parameters:
+    - Sensitivity of exposure (for exposure misclassification) or outcome (for
+      outcome misclassification) classification among those with the outcome
+      (for exposure misclassification) or exposure (for outcome misclassification),
+    - Sensitivity of exposure (or outcome) classification among those without
+      the outcome (or exposure),
+    - Specificity of exposure (or outcome) classification among those with the
+      outcome (or exposure), and
+    - Specificity of exposure (or outcome) classification among those without
+      theoutcome (or exposure).
+
+
+*- Chu, H., Zhaojie, W., Cole, S.R., Greenland, S., Sensitivity analysis of
+  misclassification: A graphical and a Bayesian approach, Annals of
+  Epidemiology 2006;16:834-841.*

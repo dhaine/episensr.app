@@ -31,16 +31,26 @@ app_server <- function(input, output,session) {
 
     episensrout = reactive({
                                mat <- as.matrix(MyChanges())
-                               mod <- selection(mat,
-                                                bias_parms = if (input$parms_controller == FALSE) {
-                                       c(input$bias_parms1,
-                                         input$bias_parms2,
-                                         input$bias_parms3,
-                                         input$bias_parms4)
-                                   } else if (input$parms_controller == TRUE) {
-                                       input$bias_factor
-                                   },
-                                                alpha = input$alpha)
+                               if (input$type == "selection") {
+                                   mod <- selection(mat,
+                                                    bias_parms = if (input$parms_controller == FALSE) {
+                                                                     c(input$bias_parms1,
+                                                                       input$bias_parms2,
+                                                                       input$bias_parms3,
+                                                                       input$bias_parms4)
+                                                                 } else if (input$parms_controller == TRUE) {
+                                                                     input$bias_factor
+                                                                 },
+                                                    alpha = input$alpha)
+                               } else if (input$type == "misclass") {
+                                   mod <- misclassification(mat,
+                                                            type = input$misclass_type,
+                                                            bias_parms = c(input$bias_parms12,
+                                                                           input$bias_parms22,
+                                                                           input$bias_parms32,
+                                                                           input$bias_parms42),
+                                                            alpha = input$alpha)
+                               }
                            })
 
     ## Output of corrected data

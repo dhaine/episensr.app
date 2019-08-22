@@ -30,54 +30,92 @@ app_ui <- function() {
                  sidebarPanel(h4("Observed data:"),
                               rHandsontableOutput('two_by_two'),
                               br(),
-                              prettyCheckbox(
-                                  inputId = "parms_controller",
-                                  label = "Providing Selection-bias factor instead of Selection probabilities",
-                                  value = FALSE,
-                                  status = "primary",
-                                  icon = icon("check"),
-                                  animation = "smooth"
+                              conditionalPanel(
+                                  condition = "input.type == 'selection'",
+                                  prettyCheckbox(
+                                      inputId = "parms_controller",
+                                      label = "Providing Selection-bias factor instead of Selection probabilities",
+                                      value = FALSE,
+                                      status = "primary",
+                                      icon = icon("check"),
+                                      animation = "smooth"),
+                                  conditionalPanel(
+                                      condition = "input.parms_controller == 0",
+                                      ## Selection probability among cases exposed
+                                      sliderInput("bias_parms1",
+                                                  "Selection probability among cases exposed#:",
+                                                  value = 0.94,
+                                                  min = 0,
+                                                  max = 1,
+                                                  width = "600px"),
+                                      ## Selection probability among cases unexposed
+                                      sliderInput("bias_parms2",
+                                                  "Selection probability among cases unexposed:",
+                                                  value = 0.85,
+                                                  min = 0,
+                                                  max = 1,
+                                                  width = "600px"),
+                                      ## Selection probability among noncases exposed
+                                      sliderInput("bias_parms3",
+                                                  "Selection probability among noncases exposed:",
+                                                  value = 0.64,
+                                                  min = 0,
+                                                  max = 1,
+                                                  width = "600px"),
+                                      ## Selection probability among noncases unexposed
+                                      sliderInput("bias_parms4",
+                                                  "Selection probability among noncases unexposed:",
+                                                  value = 0.25,
+                                                  min = 0,
+                                                  max = 1,
+                                                  width = "600px")
+                                  ),
+                                  conditionalPanel(
+                                      condition = "input.parms_controller == 1",
+                                      ## Selection-bias factor
+                                      sliderInput("bias_factor",
+                                                  "Selection-bias factor:",
+                                                  value = 0.43,
+                                                  min = 0,
+                                                  max = 1,
+                                                  width = "600px")                       
+                                  )
                               ),
                               conditionalPanel(
-                                  condition = "input.parms_controller == 0",
-                                  ## Selection probability among cases exposed
-                                  sliderInput("bias_parms1",
-                                              "Selection probability among cases exposed:",
-                                              value = 0.94,
+                                  condition = "input.type == 'misclass'",
+                                  radioGroupButtons(
+                                      inputId = "misclass_type",
+                                      label = "Misclassification of:",
+                                      choices = c("exposure",
+                                                  "outcome"),
+                                      selected = "exposure",
+                                      status = "primary",
+                                      justified = TRUE
+                                  ),
+                                  ## Se of exposure/outcome classification among those with the outcome/exposure
+                                  sliderInput("bias_parms12",
+                                              "Sensitivity of exposure (or outcome) classification among those with the outcome (or exposure):",
+                                              value = 0.78,
                                               min = 0,
-                                              max = 1,
-                                              width = "600px"),
-                                  ## Selection probability among cases unexposed
-                                  sliderInput("bias_parms2",
-                                              "Selection probability among cases unexposed:",
-                                              value = 0.85,
+                                              max = 1),
+                                  ## Se of exposure/outcome classification among those without the outcome/exposure
+                                  sliderInput("bias_parms22",
+                                              "Sensitivity of exposure (or outcome) classification among those without the outcome (or exposure):",
+                                              value = 0.78,
                                               min = 0,
-                                              max = 1,
-                                              width = "600px"),
-                                  ## Selection probability among noncases exposed
-                                  sliderInput("bias_parms3",
-                                              "Selection probability among noncases exposed:",
-                                              value = 0.64,
+                                              max = 1),
+                                  ## Sp of exposure/outcome classification among those with the outcome/exposure
+                                  sliderInput("bias_parms32",
+                                              "Specificity of exposure (or outcome) classification among those with the outcome (or exposure):",
+                                              value = 0.99,
                                               min = 0,
-                                              max = 1,
-                                              width = "600px"),
-                                  ## Selection probability among noncases unexposed
-                                  sliderInput("bias_parms4",
-                                              "Selection probability among noncases unexposed:",
-                                              value = 0.25,
+                                              max = 1),
+                                  ## Sp of exposure/outcome classification among those without the outcome/exposure
+                                  sliderInput("bias_parms42",
+                                              "Specificity of exposure (or outcome) classification among those without the outcome (or exposure):",
+                                              value = 0.99,
                                               min = 0,
-                                              max = 1,
-                                              width = "600px")
-                              ),
-                              conditionalPanel(
-                                  condition = "input.parms_controller == 1",
-                                  ## Selection-bias factor
-                                  sliderInput("bias_factor",
-                                               "Selection-bias factor:",
-                                               value = 0.43,
-                                               min = 0,
-                                              max = 1,
-                                              width = "600px")                       
+                                              max = 1)
                               ),
                               ## Alpha level
                               sliderInput("alpha",
@@ -101,8 +139,11 @@ app_ui <- function() {
                                 h4("Corrected measures of association:"),
                                 br(),
                                 tableOutput(outputId = "adj_measures"),
-                                h5("Selection bias odds ratio based on the bias parameters chosen:"),
-                                tableOutput(outputId = "selbias_or")
+                                conditionalPanel(
+                                    condition = "input.type == 'selection'",
+                                    h5("Selection bias odds ratio based on the bias parameters chosen:"),
+                                    tableOutput(outputId = "selbias_or")
+                                )
                                 )
                      )
                  )

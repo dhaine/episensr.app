@@ -84,4 +84,7 @@ app_server <- function(input, output,session) {
                                     },
                                     colnames = FALSE)
 
+    ## Automatically stop Shiny app when closing browser tab
+    session$onSessionEnded(stopApp)
+
 }

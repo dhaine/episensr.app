@@ -27,7 +27,15 @@ app_ui <- function() {
                  ),
         tabPanel("Analysis",
                  icon = icon("cog", lib = "glyphicon"),
-                 sidebarPanel(h4("Observed data:"),
+                 sidebarPanel(conditionalPanel(
+                                  condition = "input.type == 'selection'",
+                                  h3("Selection bias")
+                              ),
+                              conditionalPanel(
+                                  condition = "input.type == 'misclass'",
+                                  h3("Misclassification bias")
+                              ),
+                              h4("Observed data:"),
                               rHandsontableOutput('two_by_two'),
                               br(),
                               conditionalPanel(
@@ -92,12 +100,12 @@ app_ui <- function() {
                  mainPanel(
                      fluidRow(
                          column(width = 4,
-                                br(),
+                                br(), br(), br(),
                                 h4("Corrected data:"),
                                 tableOutput(outputId = "corr_data")
                                 ),
                          column(width = 8,
-                                br(),
+                                br(), br(), br(),
                                 h4("Observed measures of association:"),
                                 tableOutput(outputId = "obs_measures"),
                                 h4("Corrected measures of association:"),

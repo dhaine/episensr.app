@@ -41,34 +41,14 @@ app_ui <- function() {
                                       animation = "smooth"),
                                   conditionalPanel(
                                       condition = "input.parms_controller == 0",
-                                      ## Selection probability among cases exposed
-                                      sliderInput("bias_parms1",
-                                                  "Selection probability among cases exposed#:",
-                                                  value = 0.94,
-                                                  min = 0,
-                                                  max = 1,
-                                                  width = "600px"),
-                                      ## Selection probability among cases unexposed
-                                      sliderInput("bias_parms2",
-                                                  "Selection probability among cases unexposed:",
-                                                  value = 0.85,
-                                                  min = 0,
-                                                  max = 1,
-                                                  width = "600px"),
-                                      ## Selection probability among noncases exposed
-                                      sliderInput("bias_parms3",
-                                                  "Selection probability among noncases exposed:",
-                                                  value = 0.64,
-                                                  min = 0,
-                                                  max = 1,
-                                                  width = "600px"),
-                                      ## Selection probability among noncases unexposed
-                                      sliderInput("bias_parms4",
-                                                  "Selection probability among noncases unexposed:",
-                                                  value = 0.25,
-                                                  min = 0,
-                                                  max = 1,
-                                                  width = "600px")
+                                      mod_parms_ui("parms_sel1",
+                                                   "Selection probability among cases exposed:"),
+                                      mod_parms_ui("parms_sel2",
+                                                   "Selection probability among cases unexposed:"),
+                                      mod_parms_ui("parms_sel3",
+                                                   "Selection probability among noncases exposed:"),
+                                      mod_parms_ui("parms_sel4",
+                                                   "Selection probability among noncases unexposed:")
                                   ),
                                   conditionalPanel(
                                       condition = "input.parms_controller == 1",
@@ -92,30 +72,14 @@ app_ui <- function() {
                                       status = "primary",
                                       justified = TRUE
                                   ),
-                                  ## Se of exposure/outcome classification among those with the outcome/exposure
-                                  sliderInput("bias_parms12",
-                                              "Sensitivity of exposure (or outcome) classification among those with the outcome (or exposure):",
-                                              value = 0.78,
-                                              min = 0,
-                                              max = 1),
-                                  ## Se of exposure/outcome classification among those without the outcome/exposure
-                                  sliderInput("bias_parms22",
-                                              "Sensitivity of exposure (or outcome) classification among those without the outcome (or exposure):",
-                                              value = 0.78,
-                                              min = 0,
-                                              max = 1),
-                                  ## Sp of exposure/outcome classification among those with the outcome/exposure
-                                  sliderInput("bias_parms32",
-                                              "Specificity of exposure (or outcome) classification among those with the outcome (or exposure):",
-                                              value = 0.99,
-                                              min = 0,
-                                              max = 1),
-                                  ## Sp of exposure/outcome classification among those without the outcome/exposure
-                                  sliderInput("bias_parms42",
-                                              "Specificity of exposure (or outcome) classification among those without the outcome (or exposure):",
-                                              value = 0.99,
-                                              min = 0,
-                                              max = 1)
+                                  mod_parms_ui("parms_mis1",
+                                               "Sensitivity of exposure (or outcome) classification among those with the outcome (or exposure):"),
+                                  mod_parms_ui("parms_mis2",
+                                               "Sensitivity of exposure (or outcome) classification among those without the outcome (or exposure):"),
+                                  mod_parms_ui("parms_mis3",
+                                               "Specificity of exposure (or outcome) classification among those with the outcome (or exposure):"),
+                                  mod_parms_ui("parms_mis4",
+                                               "Specificity of exposure (or outcome) classification among those without the outcome (or exposure):")
                               ),
                               ## Alpha level
                               sliderInput("alpha",

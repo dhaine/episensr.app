@@ -34,10 +34,10 @@ app_server <- function(input, output,session) {
                                if (input$type == "selection") {
                                    mod <- selection(mat,
                                                     bias_parms = if (input$parms_controller == FALSE) {
-                                                                     c(input$bias_parms1,
-                                                                       input$bias_parms2,
-                                                                       input$bias_parms3,
-                                                                       input$bias_parms4)
+                                                                     c(callModule(mod_parms_server, "parms_sel1"),
+                                                                       callModule(mod_parms_server, "parms_sel2"),
+                                                                       callModule(mod_parms_server, "parms_sel3"),
+                                                                       callModule(mod_parms_server, "parms_sel4"))
                                                                  } else if (input$parms_controller == TRUE) {
                                                                      input$bias_factor
                                                                  },
@@ -45,10 +45,10 @@ app_server <- function(input, output,session) {
                                } else if (input$type == "misclass") {
                                    mod <- misclassification(mat,
                                                             type = input$misclass_type,
-                                                            bias_parms = c(input$bias_parms12,
-                                                                           input$bias_parms22,
-                                                                           input$bias_parms32,
-                                                                           input$bias_parms42),
+                                                            bias_parms = c(callModule(mod_parms_server, "parms_mis1"),
+                                                                           callModule(mod_parms_server, "parms_mis2"),
+                                                                           callModule(mod_parms_server, "parms_mis3"),
+                                                                           callModule(mod_parms_server, "parms_mis4")),
                                                             alpha = input$alpha)
                                }
                            })

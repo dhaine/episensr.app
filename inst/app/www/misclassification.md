@@ -37,6 +37,11 @@ In the **Analysis tab**, provide:
     - Specificity of exposure (or outcome) classification among those without
       theoutcome (or exposure).
 
+The data for the example come from:
+
+- Fink, A.K., Lash,  T.L. A null association between smoking during pregnancy
+  and breast cancer using Massachusetts registry data (United States). Cancer
+  Causes Control 2003;14:497-503.
 
 *- Chu, H., Zhaojie, W., Cole, S.R., Greenland, S., Sensitivity analysis of
   misclassification: A graphical and a Bayesian approach, Annals of

@@ -3,8 +3,10 @@
 #' @import rmarkdown
 #' @import rhandsontable
 #' @import shinyWidgets
+#' @import shinyjs
 #' @import episensr
-DF = data.frame(Exposed = c(0, 0), Unexposed = c(0, 0), row.names = c("Cases", "Noncases"))
+#misclass_ex = data.frame(Exposed = c(215, 668), Unexposed = c(1449, 4296),
+#                         row.names = c("Cases", "Noncases"))
 
 app_ui <- function() {
   tagList(
@@ -27,7 +29,9 @@ app_ui <- function() {
                  ),
         tabPanel("Analysis",
                  icon = icon("cog", lib = "glyphicon"),
-                 sidebarPanel(conditionalPanel(
+                 sidebarPanel(shinyjs::useShinyjs(),
+                              id = "side-panel",
+                              conditionalPanel(
                                   condition = "input.type == 'selection'",
                                   h3("Selection bias")
                               ),
@@ -50,13 +54,13 @@ app_ui <- function() {
                                   conditionalPanel(
                                       condition = "input.parms_controller == 0",
                                       mod_parms_ui("parms_sel1",
-                                                   "Selection probability among cases exposed:"),
+                                                   "Selection probability among cases exposed:", 0.94),
                                       mod_parms_ui("parms_sel2",
-                                                   "Selection probability among cases unexposed:"),
+                                                   "Selection probability among cases unexposed:", 0.85),
                                       mod_parms_ui("parms_sel3",
-                                                   "Selection probability among noncases exposed:"),
+                                                   "Selection probability among noncases exposed:", 0.64),
                                       mod_parms_ui("parms_sel4",
-                                                   "Selection probability among noncases unexposed:")
+                                                   "Selection probability among noncases unexposed:", 0.25)
                                   ),
                                   conditionalPanel(
                                       condition = "input.parms_controller == 1",
@@ -81,13 +85,13 @@ app_ui <- function() {
                                       justified = TRUE
                                   ),
                                   mod_parms_ui("parms_mis1",
-                                               "Sensitivity of exposure (or outcome) classification among those with the outcome (or exposure):"),
+                                               "Sensitivity of exposure (or outcome) classification among those with the outcome (or exposure):", 0.78),
                                   mod_parms_ui("parms_mis2",
-                                               "Sensitivity of exposure (or outcome) classification among those without the outcome (or exposure):"),
+                                               "Sensitivity of exposure (or outcome) classification among those without the outcome (or exposure):", 0.78),
                                   mod_parms_ui("parms_mis3",
-                                               "Specificity of exposure (or outcome) classification among those with the outcome (or exposure):"),
+                                               "Specificity of exposure (or outcome) classification among those with the outcome (or exposure):", 0.99),
                                   mod_parms_ui("parms_mis4",
-                                               "Specificity of exposure (or outcome) classification among those without the outcome (or exposure):")
+                                               "Specificity of exposure (or outcome) classification among those without the outcome (or exposure):", 0.99)
                               ),
                               ## Alpha level
                               sliderInput("alpha",
@@ -95,7 +99,15 @@ app_ui <- function() {
                                           value = 0.05,
                                           min = 0.01,
                                           max = 0.2,
-                                          width = "600px")
+                                          width = "600px"),
+                              actionBttn(
+                                  inputId = "reset_input",
+                                  label = "Back to example",
+                                  style = "material-flat",
+                                  color = "primary",
+                                  icon = icon("repeat", lib = "glyphicon"),
+                                  size = "sm"
+                              )
                               ),
                  mainPanel(
                      fluidRow(

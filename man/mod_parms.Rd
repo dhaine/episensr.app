@@ -5,7 +5,7 @@
 \alias{mod_parms_server}
 \title{Module to provide simple bias parameters}
 \usage{
-mod_parms_ui(id, label_parms)
+mod_parms_ui(id, label_parms, value)
 
 mod_parms_server(input, output, session)
 }

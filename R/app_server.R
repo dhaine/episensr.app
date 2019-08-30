@@ -12,25 +12,26 @@ app_server <- function(input, output,session) {
                                        includeMarkdown(bias_file)
                                    })
 
-    # Initiate table
-    previous <- reactive({DF})
+    DF = reactive({
+                      if(input$type == "selection") {
+                          data.frame(Exposed = c(136, 297), Unexposed = c(107, 165),
+                                     row.names = c("Cases", "Noncases"))
+                      } else if(input$type == "misclass") {
+                          data.frame(Exposed = c(215, 668), Unexposed = c(1449, 4296),
+                                     row.names = c("Cases", "Noncases"))
+                      }
+                  })
 
-    MyChanges <- reactive({
-                              if(is.null(input$two_by_two)){return(previous())}
-                              else if(!identical(previous(),input$two_by_two)){
-      # hot.to.df function will convert your updated table into the dataframe
-                                  mytable <- as.data.frame(hot_to_r(input$two_by_two))
-                                  mytable
-                              }
-                          })
-    output$two_by_two <- renderRHandsontable({rhandsontable(MyChanges(),
-                                                            rowHeaderWidth = 200,
-                                                            width = 400,
-                                                           stretchH = "all"
-                                                            )})
+    output$two_by_two = renderRHandsontable({
+                                                input$reset_input # trigger rendering on reset
+                                                rhandsontable(DF(),
+                                                              rowHeaderWidth = 200,
+                                                              width = 400,
+                                                              stretchH = "all")
+                                            })
 
     episensrout = reactive({
-                               mat <- as.matrix(MyChanges())
+                               mat <- as.matrix(hot_to_r(req({input$two_by_two})))
                                if (input$type == "selection") {
                                    mod <- selection(mat,
                                                     bias_parms = if (input$parms_controller == FALSE) {
@@ -84,6 +85,10 @@ app_server <- function(input, output,session) {
                                     },
                                     colnames = FALSE)
 
+    observeEvent(input$reset_input, {
+                     shinyjs::reset("side-panel")
+                 })
+    
     ## Automatically stop Shiny app when closing browser tab
     session$onSessionEnded(stopApp)
 

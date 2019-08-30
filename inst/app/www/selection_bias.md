@@ -24,3 +24,10 @@ the following bias parameters:
 Alternatively provide a single positive selection-bias factor which is the ratio
 of the exposed versus unexposed selection probabilities comparing cases and
 noncases [(1 X 4) / (2 X 3) from above].
+
+The data for the example provided come from:
+
+- Stang A., Schmidt-Pokrzywniak A., Lehnert M., Parkin D.M., Ferlay J., Bornfeld
+  N. et al. Population-based incidence estimates of uveal melanoma in Germany.
+  Supplementing cancer registry data by case-control data. Eur J Cancer Prev
+  2006;15:165-70.

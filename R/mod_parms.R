@@ -14,11 +14,11 @@
 #' @keywords internal
 #' @export 
 #' @importFrom shiny NS tagList 
-mod_parms_ui <- function(id, label_parms){
+mod_parms_ui <- function(id, label_parms, value){
   ns <- NS(id)
   tagList(
       sliderInput(ns("bias_parms"), label_parms,
-                  value = 1, min = 0, max = 1,
+                  value = value, min = 0, max = 1,
                   width = "600px")  
   )
 }

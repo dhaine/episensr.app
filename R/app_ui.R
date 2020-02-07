@@ -33,12 +33,13 @@ app_ui <- function() {
                               id = "side-panel",
                               conditionalPanel(
                                   condition = "input.type == 'selection'",
-                                  h3("Selection bias")
-                              ),
+                                  h3("Selection bias")),
                               conditionalPanel(
                                   condition = "input.type == 'misclass'",
-                                  h3("Misclassification bias")
-                              ),
+                                  h3("Misclassification bias")),
+                              conditionalPanel(
+                                  condition = "input.type == 'probsens'",
+                                  h3("Probabilistic sensitivity analysis")),
                               h4("Observed data:"),
                               rHandsontableOutput('two_by_two'),
                               br(),
@@ -60,8 +61,7 @@ app_ui <- function() {
                                       mod_parms_ui("parms_sel3",
                                                    "Selection probability among noncases exposed:", 0.64),
                                       mod_parms_ui("parms_sel4",
-                                                   "Selection probability among noncases unexposed:", 0.25)
-                                  ),
+                                                   "Selection probability among noncases unexposed:", 0.25)),
                                   conditionalPanel(
                                       condition = "input.parms_controller == 1",
                                       ## Selection-bias factor
@@ -70,20 +70,16 @@ app_ui <- function() {
                                                   value = 0.43,
                                                   min = 0,
                                                   max = 1,
-                                                  width = "600px")                       
-                                  )
-                              ),
+                                                  width = "600px"))),
                               conditionalPanel(
                                   condition = "input.type == 'misclass'",
                                   radioGroupButtons(
                                       inputId = "misclass_type",
                                       label = "Misclassification of:",
-                                      choices = c("exposure",
-                                                  "outcome"),
+                                      choices = c("exposure", "outcome"),
                                       selected = "exposure",
                                       status = "primary",
-                                      justified = TRUE
-                                  ),
+                                      justified = TRUE),
                                   mod_parms_ui("parms_mis1",
                                                "Sensitivity of exposure (or outcome) classification among those with the outcome (or exposure):", 0.78),
                                   mod_parms_ui("parms_mis2",
@@ -92,6 +88,23 @@ app_ui <- function() {
                                                "Specificity of exposure (or outcome) classification among those with the outcome (or exposure):", 0.99),
                                   mod_parms_ui("parms_mis4",
                                                "Specificity of exposure (or outcome) classification among those without the outcome (or exposure):", 0.99)
+                              ),
+                              conditionalPanel(
+                                  condition = "input.type == 'probsens'",
+                                  radioGroupButtons(
+                                      inputId = "probsens_type",
+                                      label = "Misclassification of:",
+                                      choices = c("exposure", "outcome"),
+                                      selected = "exposure",
+                                      status = "primary",
+                                      justified = TRUE),
+                                  radioGroupButtons(
+                                      inputId = "probsens_corr",
+                                      label = "Correlation between cases and noncases?:",
+                                      choices = c("none", "yes"),
+                                      selected = "none",
+                                      status = "primary",
+                                      justified = TRUE)
                               ),
                               ## Alpha level
                               sliderInput("alpha",
@@ -106,8 +119,7 @@ app_ui <- function() {
                                   style = "material-flat",
                                   color = "primary",
                                   icon = icon("repeat", lib = "glyphicon"),
-                                  size = "sm"
-                              )
+                                  size = "sm")
                               ),
                  mainPanel(
                      fluidRow(

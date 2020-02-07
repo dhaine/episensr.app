@@ -7,7 +7,8 @@ app_server <- function(input, output,session) {
     output$bias_choice <- renderUI({
                                        bias_file <- switch(input$type,
                                                            selection = "inst/app/www/selection_bias.md",
-                                                           misclass = "inst/app/www/misclassification.md"
+                                                           misclass = "inst/app/www/misclassification.md",
+                                                           probsens = "inst/app/www/probsens.md"
                                                            )
                                        includeMarkdown(bias_file)
                                    })
@@ -18,6 +19,9 @@ app_server <- function(input, output,session) {
                                      row.names = c("Cases", "Noncases"))
                       } else if(input$type == "misclass") {
                           data.frame(Exposed = c(215, 668), Unexposed = c(1449, 4296),
+                                     row.names = c("Cases", "Noncases"))
+                      } else if(input$type == "probsens") {
+                          data.frame(Exposed = c(45, 257), Unexposed = c(94, 945),
                                      row.names = c("Cases", "Noncases"))
                       }
                   })
@@ -51,6 +55,12 @@ app_server <- function(input, output,session) {
                                                                            callModule(mod_parms_server, "parms_mis3"),
                                                                            callModule(mod_parms_server, "parms_mis4")),
                                                             alpha = input$alpha)
+                               } else if (input$type == "probsens") {
+                                   mod <- probsens(mat,
+                                                   type = input$probsens_type,
+                                                   reps = 20000,
+                                                   seca.parms = list("trapezoidal", c(.75, .85, .95, 1)),
+                                                   spca.parms = list("trapezoidal", c(.75, .85, .95, 1)))
                                }
                            })
 

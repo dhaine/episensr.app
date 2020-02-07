@@ -35,7 +35,7 @@ In the **Analysis tab**, provide:
     - Specificity of exposure (or outcome) classification among those with the
       outcome (or exposure), and
     - Specificity of exposure (or outcome) classification among those without
-      theoutcome (or exposure).
+      the outcome (or exposure).
 
 The data for the example come from:
 
